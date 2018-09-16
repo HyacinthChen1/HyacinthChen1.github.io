@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://hyacinthchen1.github.io">
-  <title>Archives: 2018 | C-H-Q随笔</title>
+  <title>C-H-Q随笔</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
+  <meta name="description" content="确保一个类只有一个实例，并提供全局的访问点。  创建方式 最直接的单例模式创建123456789101112131415161718192021public class Singleton &amp;#123;    //用来记录唯一的实例    private static Singleton uniqueInstance;    //将构造函数定义为private，避免类被外部实例化;也就是只能在类">
+<meta property="og:type" content="article">
 <meta property="og:title" content="C-H-Q随笔">
-<meta property="og:url" content="https://hyacinthchen1.github.io/archives/2018/index.html">
+<meta property="og:url" content="https://hyacinthchen1.github.io/2018/07/29/ 【设计模式】单例模式——独一无二的对象/index.html">
 <meta property="og:site_name" content="C-H-Q随笔">
+<meta property="og:description" content="确保一个类只有一个实例，并提供全局的访问点。  创建方式 最直接的单例模式创建123456789101112131415161718192021public class Singleton &amp;#123;    //用来记录唯一的实例    private static Singleton uniqueInstance;    //将构造函数定义为private，避免类被外部实例化;也就是只能在类">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-07-29T09:03:03.039Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C-H-Q随笔">
+<meta name="twitter:description" content="确保一个类只有一个实例，并提供全局的访问点。  创建方式 最直接的单例模式创建123456789101112131415161718192021public class Singleton &amp;#123;    //用来记录唯一的实例    private static Singleton uniqueInstance;    //将构造函数定义为private，避免类被外部实例化;也就是只能在类">
   
     <link rel="alternative" href="/atom.xml" title="C-H-Q随笔" type="application/atom+xml">
   
@@ -142,124 +146,173 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post- 【设计模式】单例模式——独一无二的对象" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>确保一个类只有一个实例，并提供全局的访问点。</p>
+</blockquote>
+<h1 id="创建方式"><a href="#创建方式" class="headerlink" title="创建方式"></a>创建方式</h1><ol>
+<li>最直接的单例模式创建<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">public class Singleton &#123;</span><br><span class="line">    //用来记录唯一的实例</span><br><span class="line">    private static Singleton uniqueInstance;</span><br><span class="line"></span><br><span class="line">    //将构造函数定义为private，避免类被外部实例化;也就是只能在类内部进行调用</span><br><span class="line">    private Singleton() &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //定义获取实例的方法，可以延迟创建实例</span><br><span class="line">    public static Singleton getInstance() &#123;</span><br><span class="line">        //如果不存在实例，就创建</span><br><span class="line">        if (uniqueInstance == null) &#123;</span><br><span class="line">            return new Singleton();</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            //如果已经存在，直接返回</span><br><span class="line">            return uniqueInstance;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<blockquote>
+<p>缺点：无法应用在多线程中，可能会创建多个实例。</p>
+</blockquote>
+<ol start="2">
+<li>使用synchronized关键字，避免多线程中创建多实例的冲突</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public class Singleton &#123;</span><br><span class="line">    //用来记录唯一的实例</span><br><span class="line">    private static Singleton uniqueInstance;</span><br><span class="line"></span><br><span class="line">    //将构造函数定义为private，避免类被外部实例化;也就是只能在类内部进行调用</span><br><span class="line">    private Singleton() &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public static synchronized Singleton getInstance() &#123;</span><br><span class="line">        if (uniqueInstance == null) &#123;</span><br><span class="line">            return new Singleton();</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            return uniqueInstance;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>缺点：实际上只有在第一次创建实例时才需要解决冲突，但是使用synchronized关键字后每次访问都会加锁，影响性能。</p>
+</blockquote>
+<ol start="3">
+<li>“急切”地创建实例,依赖JVM，在加载这个类时就会直接创建唯一的实例</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class Singleton &#123;</span><br><span class="line"></span><br><span class="line">    private static Singleton uniqueInstance = new Singleton();</span><br><span class="line"></span><br><span class="line">    public static Singleton getInstance() &#123;</span><br><span class="line">        return uniqueInstance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>双重加锁</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public class Singleton &#123;</span><br><span class="line"></span><br><span class="line">    private volatile static Singleton uniqueInstance;</span><br><span class="line">    </span><br><span class="line">    //将构造函数定义为private，避免类被外部实例化;也就是只能在类内部进行调用</span><br><span class="line">    private Singleton() &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static Singleton getInstance() &#123;</span><br><span class="line">        //第一处锁：检查uniqueInstance，不存在就进入同步块</span><br><span class="line">        if (uniqueInstance == null) &#123;</span><br><span class="line">            synchronized (Singleton.class) &#123;</span><br><span class="line">                //第二处锁：进入同步块后，再次确认uniqueInstance为null时，创建实例</span><br><span class="line">                if (uniqueInstance == null) &#123;</span><br><span class="line">                    return new Singleton();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return uniqueInstance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>优点：性能最优；<br>  缺点：不适用于1.4及更早版本的java</p>
+</blockquote>
+<blockquote>
+<p>  volitile关键字：一旦一个共享变量（类的成员变量、类的静态成员变量）被volatile修饰之后，那么就具备了两层语义：</p>
+<p>　1.保证了不同线程对这个变量进行操作时的可见性，即一个线程修改了某个变量的值，这新值对其他线程来说是立即可见的。</p>
+<p>  2.禁止进行指令重排序。</p>
+</blockquote>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/HyacinthChen1.github.io/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/HyacinthChen1.github.io/2018/07/29/ 【设计模式】单例模式——独一无二的对象/" class="archive-article-date">
-  	<time datetime="2018-07-29T09:03:02.691Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-29</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://hyacinthchen1.github.io/2018/07/29/ 【设计模式】单例模式——独一无二的对象/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/HyacinthChen1.github.io/2018/05/07/安装homebrew/" class="archive-article-date">
-  	<time datetime="2018-05-07T15:28:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-07</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/HyacinthChen1.github.io/2018/05/07/安装homebrew/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">macOS安装homebrew全过程</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/HyacinthChen1.github.io/2018/05/07/安装homebrew/">macOS安装homebrew全过程</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/HyacinthChen1.github.io/2018/04/30/Hello-hexo/" class="archive-article-date">
-  	<time datetime="2018-04-30T15:03:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/HyacinthChen1.github.io/2018/04/30/Hello-hexo/">Hello,hexo</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/HyacinthChen1.github.io/2018/04/30/hello-world/" class="archive-article-date">
-  	<time datetime="2018-04-30T13:55:53.417Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/HyacinthChen1.github.io/2018/04/30/hello-world/">Hello World</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -282,8 +335,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
